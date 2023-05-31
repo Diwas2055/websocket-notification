@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>WebSocket Notifications</title>
+</head>
+
+<body>
+    <h1>WebSocket Notifications</h1>
+    <ul id="notifications"></ul>
+
+    <script>
+        const notificationsList = document.getElementById('notifications');
+        const socket = new WebSocket('ws://localhost:8765');
+
+        socket.onopen = function () {
+            console.log('Connected to the WebSocket server');
+        };
+
+        socket.onmessage = function (event) {
+            console.log(event);
+            // const message = JSON.parse(data);
+            const message = event.data;
+            const notificationItem = document.createElement('li');
+            notificationItem.textContent = message;
+            notificationsList.appendChild(notificationItem);
+        };
+
+        socket.onclose = function () {
+            console.log('Disconnected from the WebSocket server');
+        };
+    </script>
+</body>
+
+</html>
